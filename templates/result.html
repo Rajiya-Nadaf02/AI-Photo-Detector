@@ -1,0 +1,117 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Detection Result</title>
+
+    <style>
+
+        body{
+            margin:0;
+            font-family:Arial,sans-serif;
+
+            background:url("/static/bg.jpg");
+            background-size:cover;
+            background-position:center;
+
+            display:flex;
+            justify-content:center;
+            align-items:center;
+
+            height:100vh;
+        }
+
+        .card{
+
+            background:white;
+
+            padding:40px;
+
+            border-radius:15px;
+
+            text-align:center;
+
+            width:500px;
+
+            box-shadow:0 0 20px rgba(0,0,0,0.3);
+        }
+
+        h1{
+            margin-bottom:20px;
+        }
+
+        .result{
+
+            font-size:30px;
+            font-weight:bold;
+            margin:20px 0;
+        }
+
+        .ai{
+            color:red;
+        }
+
+        .real{
+            color:green;
+        }
+
+        img{
+
+            width:300px;
+            border-radius:10px;
+
+            margin-bottom:20px;
+        }
+
+        .btn{
+
+            display:inline-block;
+
+            padding:12px 20px;
+
+            background:#2563eb;
+
+            color:white;
+
+            text-decoration:none;
+
+            border-radius:8px;
+
+            margin-top:15px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="card">
+
+    <h1>Detection Result</h1>
+
+    <img src="/uploads/{{ image_name }}">
+
+    {% if result == "AI Generated" %}
+        <div class="result ai">
+            AI Generated
+        </div>
+    {% else %}
+        <div class="result real">
+            Real Photo
+        </div>
+    {% endif %}
+
+    <h3>AI Confidence: {{ ai_confidence|round(2) }}%</h3>
+
+    <h3>Real Confidence: {{ real_confidence|round(2) }}%</h3>
+
+    <br>
+
+    <a href="/" class="btn">Analyze Another Image</a>
+
+</div>
+
+</body>
+</html>
+```

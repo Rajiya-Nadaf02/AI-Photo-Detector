@@ -1,0 +1,206 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Photo Detector</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+<nav class="navbar">
+    
+    <h2>AI Photo Detector</h2>
+
+    <div>
+        <a href="/">Home</a>
+        <a href="/dashboard">Dashboard</a>
+        <a href="/history">History</a>
+        <button id="themeBtn" class="theme-btn">
+    🌙 Dark Mode
+</button>
+    </div>
+</nav>
+
+<div class="hero">
+
+    <div class="card">
+
+        <h1>Detect AI Generated Images</h1>
+
+        <p>
+            Upload an image and check whether
+            it is AI generated or a real photo.
+        </p>
+
+        <form action="/upload"
+              method="POST"
+              enctype="multipart/form-data">
+
+            <div id="drop-area">
+
+                <p><b>📂 Drag & Drop Image Here</b></p>
+
+                <p>OR</p>
+
+                <input
+                    type="file"
+                    id="imageInput"
+                    name="image"
+                    required>
+
+            </div>
+
+            <br>
+
+            <img id="preview"
+                 width="300"
+                 style="display:none;">
+
+            <br><br>
+
+            <button class="btn" type="submit">
+                Analyze Image
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+const dropArea =
+document.getElementById("drop-area");
+
+const fileInput =
+document.getElementById("imageInput");
+
+dropArea.addEventListener(
+    "dragover",
+    function(e){
+
+        e.preventDefault();
+
+        dropArea.classList.add(
+            "dragover"
+        );
+    }
+);
+
+dropArea.addEventListener(
+    "dragleave",
+    function(){
+
+        dropArea.classList.remove(
+            "dragover"
+        );
+    }
+);
+
+dropArea.addEventListener(
+    "drop",
+    function(e){
+
+        e.preventDefault();
+
+        dropArea.classList.remove(
+            "dragover"
+        );
+
+        fileInput.files =
+        e.dataTransfer.files;
+
+        const file =
+        e.dataTransfer.files[0];
+
+        if(file){
+
+            const reader =
+            new FileReader();
+
+            reader.onload =
+            function(event){
+
+                const preview =
+                document.getElementById(
+                    "preview"
+                );
+
+                preview.src =
+                event.target.result;
+
+                preview.style.display =
+                "block";
+            }
+
+            reader.readAsDataURL(file);
+        }
+    }
+);
+
+document.getElementById("imageInput")
+.addEventListener("change", function(event){
+
+    const file =
+    event.target.files[0];
+
+    if(file){
+
+        const reader =
+        new FileReader();
+
+        reader.onload =
+        function(e){
+
+            const preview =
+            document.getElementById(
+                "preview"
+            );
+
+            preview.src =
+            e.target.result;
+
+            preview.style.display =
+            "block";
+        };
+
+        reader.readAsDataURL(file);
+    }
+});
+
+</script>
+<script>
+
+const themeBtn =
+document.getElementById("themeBtn");
+
+themeBtn.addEventListener(
+    "click",
+    function(){
+
+        document.body.classList.toggle(
+            "dark-mode"
+        );
+
+        if(
+            document.body.classList.contains(
+                "dark-mode"
+            )
+        ){
+
+            themeBtn.innerHTML =
+            "☀️ Light Mode";
+
+        }else{
+
+            themeBtn.innerHTML =
+            "🌙 Dark Mode";
+        }
+    }
+);
+
+</script>
+</body>
+</html>
